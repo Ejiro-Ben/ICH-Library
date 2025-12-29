@@ -1,5 +1,5 @@
 import NavBar from "./NavBar";
-import ICHlogo from '../assets/ich-images/ICHLogo.png';
+import ichlogo from '../assets/ich-images/ich-logo.png';
 import image1 from '../assets/ich-images/image1.jpg';
 import image2 from '../assets/ich-images/image2.jpg';
 import image3 from '../assets/ich-images/image3.jpg';
@@ -16,7 +16,7 @@ function Hero() {
                 <div className="container mx-auto px-6 text-center absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_60%)]">
                     <div className="relative z-10 pt-20">
                         <div className="text-chem-cyan text-sm font-bold border border-chem-cyan bg-chem-dark rounded-full inline-block px-4 py-2 mb-6">
-                            <img src={ICHlogo} alt="ICH Logo" className="inline h-6 mr-2 mb-1" />
+                            <img src={ichlogo} alt="ICH Logo" className="inline h-6 mr-2 mb-1" />
                             Welcome to ICH Digital Library
                         </div>
                         <h1 className="text-3xl font-bold mb-3 bg-gradient-to-r from-chem-cyan to-chem-green bg-clip-text text-transparent md:text-5xl">Department of Industrial<br></br><span>Chemistry</span></h1>
