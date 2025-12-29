@@ -1,6 +1,6 @@
 
 import React from 'react';
-import AtomLogo from '../assets/ICH images/AtomLogo.png';
+import AtomLogo from '../assets/ich-images/AtomLogo.png';
 import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSearch, faBook, faFileCircleQuestion, faExclamationCircle, faBars, faScroll, faX } from "@fortawesome/free-solid-svg-icons";

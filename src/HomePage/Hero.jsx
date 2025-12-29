@@ -1,8 +1,8 @@
 import NavBar from "./NavBar";
-import ICHlogo from '../assets/ICH images/ICHLogo.png';
-import image1 from '../assets/ICH images/image1.jpg';
-import image2 from '../assets/ICH images/image2.jpg';
-import image3 from '../assets/ICH images/image3.jpg';
+import ICHlogo from '../assets/ich-images/ICHLogo.png';
+import image1 from '../assets/ich-images/image1.jpg';
+import image2 from '../assets/ich-images/image2.jpg';
+import image3 from '../assets/ich-images/image3.jpg';
 import { faSearch, faBook, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "./SearchBar";

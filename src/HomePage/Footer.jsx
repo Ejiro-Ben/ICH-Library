@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AtomLogo from '../assets/ICH images/AtomLogo.png';
+import AtomLogo from '../assets/ich-images/AtomLogo.png';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faBarChart, faBookOpen, faEnvelope, faLink } from '@fortawesome/free-solid-svg-icons';
 
