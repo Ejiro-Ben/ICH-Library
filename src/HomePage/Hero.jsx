@@ -6,6 +6,8 @@ import image3 from '../assets/ich-images/image3.jpg';
 import { faSearch, faBook, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "./SearchBar";
+import Library from "../LibraryPage/Library";
+import { Link } from "react-router-dom";
 
 function Hero() {
 
@@ -26,12 +28,12 @@ function Hero() {
 
                     <SearchBar />
                     
-                    <div className="flex justify-center mb-4">
-                        <button className="bg-chem-cyan hover:text-white mx-2 text-sm md:text-base rounded-lg py-2 px-6 md:px-8 flex mb-4">
+                    <div className="mb-4 flex flex-col md:flex-row items-center">
+                        <Link to="/library" className="bg-chem-cyan hover:text-white mx-2 text-sm md:text-base rounded-lg py-2 px-6 md:px-8 mb-4">
                             <FontAwesomeIcon icon={faBook} className="mr-3 mt-1 md:mt-1.5 text-sm" />Explore Library
-                        </button>
+                        </Link>
 
-                        <button className="bg-chem-dark text-white border border-chem-cyan/10 hover:border-chem-cyan mx-2 text-sm md:text-base rounded-lg py-2 px-6 md:px-8 flex mb-4">
+                        <button className="bg-chem-dark text-white border border-chem-cyan/10 hover:border-chem-cyan mx-2 text-sm md:text-base rounded-lg py-2 px-6 md:px-8 mb-4">
                             <FontAwesomeIcon icon={faSearch} className="mr-3 mt-1 md:mt-1.5 text-sm" />Search Resources
                         </button>
                     </div>

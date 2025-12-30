@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AtomLogo from '../assets/ich-images/AtomLogo.png';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faBarChart, faBookOpen, faEnvelope, faLink } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import Library from '../LibraryPage/Library';
 
 function Footer() {
 
@@ -55,7 +57,7 @@ function Footer() {
                             </div>
 
                             <div className='text-gray-400 flex flex-col text-sm'>
-                                <a href='#' className='hover:text-chem-cyan'> Library </a>
+                                <Link to="/library" className='hover:text-chem-cyan'> Library </Link>
                                 <a href='#' className='hover:text-chem-cyan'> Past Questions </a>
                             </div>
                         </div>
