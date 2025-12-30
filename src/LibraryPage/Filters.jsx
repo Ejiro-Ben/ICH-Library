@@ -53,7 +53,7 @@ function Filters() {
                     </div>
 
                     {isOpen1 && (
-                        <div className="absolute mt-6 border border-chem-cyan/10 p-2 w-28 bg-chem-slate rounded-lg flex flex-col">
+                        <div className="relative md:absolute mt-2 md:mt-6 border border-chem-cyan/10 p-2 w-28 md:bg-chem-slate rounded-lg flex flex-col">
                             <div>
                                 <input type="checkbox" className="mr-1"></input>
                                 <label className="mb-2 text-white">100 Level</label>
@@ -88,7 +88,7 @@ function Filters() {
                     </div>
 
                     {isOpen2 && (
-                        <div className="absolute mt-6 border border-chem-cyan/10 p-2 w-40 bg-chem-slate rounded-lg flex flex-col">
+                        <div className="relative md:absolute mt-2 md:mt-6 border border-chem-cyan/10 p-2 w-40 md:bg-chem-slate rounded-lg flex flex-col">
                             <div>
                                 <input type="checkbox" className="mr-1"></input>
                                 <label className="mb-2 text-white">Lecture Notes</label>
