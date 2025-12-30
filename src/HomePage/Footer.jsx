@@ -26,11 +26,11 @@ function Footer() {
                                 <FontAwesomeIcon icon={faEnvelope} />
                             </a>
 
-                            <a href='#' className='text-white p-1 border border-chem-cyan/10 rounded-lg mr-2 hover:border-chem-cyan'>
+                            <a href='https://github.com/Ejiro-Ben' className='text-white p-1 border border-chem-cyan/10 rounded-lg mr-2 hover:border-chem-cyan'>
                                 <FontAwesomeIcon icon={faGithub} />
                             </a>
 
-                            <a href='#' className='text-white p-1 border border-chem-cyan/10 rounded-lg mr-2 hover:border-chem-cyan'>
+                            <a href='https://x.com/Ejiro_Ben5' className='text-white p-1 border border-chem-cyan/10 rounded-lg mr-2 hover:border-chem-cyan'>
                                 <FontAwesomeIcon icon={faTwitter} />
                             </a>
                         </div>
