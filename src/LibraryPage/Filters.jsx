@@ -37,7 +37,7 @@ function Filters() {
 
     return (
         <>
-            <div className="bg-chem-cyan/10 border border-chem-cyan/10 p-3 rounded-lg flex justify-between">
+            <div className="bg-chem-cyan/10 border border-chem-cyan/10 p-3 rounded-lg flex justify-between flex-col md:flex-row">
                 <div className="flex space-x-2 py-2">
                     <FontAwesomeIcon icon={faFilter} className="text-chem-cyan" />
                     <h1 className="text-white">Filters</h1>
