@@ -1,11 +1,28 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookOpen, faCheckCircle, faDownload, faUsers, faBoltLightning, faShield, faLock, faGlobe, faLocationArrow, faHome, faShareNodes, faUpload, faBook, faFileCircleQuestion, faExclamationCircle, faHistory, faScroll, faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
+import {
+    faBookOpen,
+    faCheckCircle,
+    faDownload,
+    faUsers,
+    faBoltLightning,
+    faShield,
+    faLock,
+    faGlobe,
+    faLocationArrow,
+    faHome,
+    faShareNodes,
+    faUpload,
+    faBook,
+    faFileCircleQuestion,
+    faExclamationCircle,
+    faHistory,
+    faScroll,
+    faBarsStaggered,
+} from "@fortawesome/free-solid-svg-icons";
 import Hero from "./Hero";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
-
-
 
 function Home() {
     return (
@@ -55,7 +72,7 @@ function Home() {
                         <FontAwesomeIcon icon={faBoltLightning} className="p-1.5 rounded-lg text-chem-cyan bg-chem-cyan/15 mr-3" />
                         <div>
                             <h1 className="text-xl mb-2">Lightning Fast Search</h1>
-                            <p className="text-sm text-gray-400">Find exactly what you need with our advanced search and filetering system. Search by course code, topic or author instantly.</p>
+                            <p className="text-sm text-gray-400">Find exactly what you need with our advanced search and filtering system. Search by course code, topic or author instantly.</p>
                         </div>
                     </div>
 
@@ -63,7 +80,7 @@ function Home() {
                         <FontAwesomeIcon icon={faShield} className="p-1.5 rounded-lg text-chem-cyan bg-chem-cyan/15 mr-3" />
                         <div>
                             <h1 className="text-xl mb-2">Verified Content</h1>
-                            <p className="text-sm text-gray-400">All materials are reviewed and verified by department faculty to endure academic quality and relevance.</p>
+                            <p className="text-sm text-gray-400">All materials are reviewed and verified by department faculty to ensure academic quality and relevance.</p>
                         </div>
                     </div>
 
@@ -170,7 +187,7 @@ function Home() {
                     <p className="text-gray-400 mb-3">Start your journey through our comprehensive digital library. Browse thousands of academic resources or contribute your own materials </p>
 
                     <div className="md:flex md:justify-around">
-                        <Link to="/Library">
+                        <Link to="/library">
                             <button className="text-sm md:text-base bg-chem-cyan rounded-lg p-2 w-48 mb-3 md:mb-0 mr-3 hover:text-white">
                                 <FontAwesomeIcon icon={faBook} />
                                 Browse Library

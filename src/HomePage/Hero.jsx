@@ -6,11 +6,17 @@ import image3 from '../assets/ich-images/image3.jpg';
 import { faSearch, faBook, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "./SearchBar";
-import Library from "../LibraryPage/Library";
 import { Link } from "react-router-dom";
 
-function Hero() {
+const Images = ({ desktop, tablet, mobile }) => (
+    <>
+        {desktop && <div className="opacity-20 hidden lg:flex justify-evenly">{desktop}</div>}
+        {tablet && <div className="opacity-20 hidden md:flex justify-evenly lg:hidden">{tablet}</div>}
+        {mobile && <div className="opacity-20 flex justify-evenly md:hidden">{mobile}</div>}
+    </>
+);
 
+function Hero() {
     return (
         <>
             <NavBar />
@@ -21,20 +27,23 @@ function Hero() {
                             <img src={ichlogo} alt="ICH Logo" className="inline h-6 mr-2 mb-1" />
                             Welcome to ICH Digital Library
                         </div>
-                        <h1 className="text-3xl font-bold mb-3 bg-gradient-to-r from-chem-cyan to-chem-green bg-clip-text text-transparent md:text-5xl">Department of Industrial<br></br><span>Chemistry</span></h1>
+                        <h1 className="text-3xl font-bold mb-3 bg-gradient-to-r from-chem-cyan to-chem-green bg-clip-text text-transparent md:text-5xl">
+                            Department of Industrial<br /><span>Chemistry</span>
+                        </h1>
                         <h1 className="text-3xl font-bold mb-3 text-white md:text-5xl">Digital Library</h1>
-                        <p className="text-lg text-gray-600">Research. Knowledge.Innovation</p>
+                        <p className="text-lg text-gray-600">Research. Knowledge. Innovation</p>
                     </div>
 
                     <SearchBar />
-                    
-                    <div className="mb-4 flex flex-col md:flex-row items-center">
-                        <Link to="/library" className="bg-chem-cyan hover:text-white mx-2 text-sm md:text-base rounded-lg py-2 px-6 md:px-8 mb-4">
-                            <FontAwesomeIcon icon={faBook} className="mr-3 mt-1 md:mt-1.5 text-sm" />Explore Library
-                        </Link>
 
+                    <div className="mb-4 flex flex-col md:flex-row justify-center">
+                        <Link to="/library" className="bg-chem-cyan hover:text-white mx-2 text-sm md:text-base rounded-lg py-2 px-6 md:px-8 mb-4">
+                            <FontAwesomeIcon icon={faBook} className="mr-3 mt-1 md:mt-1.5 text-sm" />
+                            Explore Library
+                        </Link>
                         <button className="bg-chem-dark text-white border border-chem-cyan/10 hover:border-chem-cyan mx-2 text-sm md:text-base rounded-lg py-2 px-6 md:px-8 mb-4">
-                            <FontAwesomeIcon icon={faSearch} className="mr-3 mt-1 md:mt-1.5 text-sm" />Search Resources
+                            <FontAwesomeIcon icon={faSearch} className="mr-3 mt-1 md:mt-1.5 text-sm" />
+                            Search Resources
                         </button>
                     </div>
 
@@ -44,26 +53,16 @@ function Hero() {
                             Contribute Materials
                         </button>
                     </div>
-                    
-                    <div className="opacity-20 hidden lg:flex justify-evenly">
-                        <img src={image1} alt="Chemical Structures" />
-                        <img src={image2} alt="Chemical Structures" />
-                        <img src={image3} alt="Chemical Structures" />
-                    </div>
 
-                    <div className="opacity-20 hidden md:flex justify-evenly lg:hidden">
-                        <img src={image1} alt="Chemical Structures" />
-                        <img src={image2} alt="Chemical Structures" />
-                    </div>
-
-                    <div className="opacity-20 flex justify-evenly md:hidden">
-                        <img src={image1} alt="Chemical Structures" />
-                    </div>
-
+                    <Images
+                        desktop={<><img src={image1} alt="Chemical Structures" /><img src={image2} alt="Chemical Structures" /><img src={image3} alt="Chemical Structures" /></>}
+                        tablet={<><img src={image1} alt="Chemical Structures" /><img src={image2} alt="Chemical Structures" /></>}
+                        mobile={<img src={image1} alt="Chemical Structures" />}
+                    />
                 </div>
             </section>
         </>
-    );
+    )
 }
 
-export default Hero;
+export default Hero
