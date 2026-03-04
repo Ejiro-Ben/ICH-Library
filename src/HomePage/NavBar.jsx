@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import AtomLogo from '../assets/ich-images/AtomLogo.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faBook, faFileCircleQuestion, faExclamationCircle, faBars, faScroll, faX } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faBook, faCog, faFileCircleQuestion, faExclamationCircle, faBars, faScroll, faX } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 
 const NavItem = ({ icon, label, to, href }) => (
@@ -33,6 +33,7 @@ const navItems = [
     { icon: faScroll, label: "Research Papers", href: "#researchpapers" },
     { icon: faFileCircleQuestion, label: "Past Questions", href: "#pastquestions" },
     { icon: faExclamationCircle, label: "About", href: "#about" },
+    { icon: faCog, label: "Admin", to: "/admin/upload" }
 ];
 
 function NavBar() {
