@@ -87,6 +87,29 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 })
 
+// Search books endpoint
+router.get('/search', async (req, res) => {
+  try {
+    const searchQuery = req.query.q || ''
+    
+    if (!searchQuery.trim()) {
+      return res.json([])
+    }
+
+    const { data, error } = await supabase
+      .from('books')
+      .select('*')
+      .or(`course_title.ilike.%${searchQuery}%,course_code.ilike.%${searchQuery}%,author.ilike.%${searchQuery}%,category.ilike.%${searchQuery}%`)
+      .order('created_at', { ascending: false })
+
+    if (error) throw error
+
+    res.json(data)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
 // Get all books
 router.get('/', async (req, res) => {
   try {
@@ -162,7 +185,7 @@ router.delete('/:id', async (req, res) => {
     res.json({message: 'Deleta successfully'})
 
   } catch (err) {
-    res.status(500),json({ error: err.message})
+    res.status(500).json({ error: err.message})
   }
 })
 

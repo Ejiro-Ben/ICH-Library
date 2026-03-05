@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUpload, faCheckCircle, faTimesCircle, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../HomePage/NavBar';
 import Footer from '../HomePage/Footer';
 
@@ -16,6 +16,26 @@ export default function AdminBooks() {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [books, setBooks] = useState([]);
+  const [loadingBooks, setLoadingBooks] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Fetch books on component mount
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const fetchBooks = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/books');
+      const data = await response.json();
+      setBooks(data || []);
+    } catch (error) {
+      console.error('Error fetching books:', error);
+    } finally {
+      setLoadingBooks(false);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -82,6 +102,9 @@ export default function AdminBooks() {
 
       // Reset file input
       document.getElementById('file-input').value = '';
+      
+      // Refresh books list
+      await fetchBooks();
 
     } catch (error) {
       console.error('Upload error:', error);
@@ -89,6 +112,44 @@ export default function AdminBooks() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDelete = async (bookId, courseName) => {
+    if (!window.confirm(`Are you sure you want to delete "${courseName}"?`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/books/${bookId}`, {
+        method: 'DELETE'
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Delete failed');
+      }
+
+      setMessage({ type: 'success', text: 'Material deleted successfully!' });
+      await fetchBooks();
+    } catch (error) {
+      console.error('Delete error:', error);
+      setMessage({ type: 'error', text: error.message || 'Delete failed. Please try again.' });
+    }
+  };
+
+  const getFilteredBooks = () => {
+    if (!searchQuery.trim()) {
+      return books;
+    }
+    
+    const query = searchQuery.toLowerCase();
+    return books.filter(book => 
+      book.course_title.toLowerCase().includes(query) ||
+      book.course_code.toLowerCase().includes(query) ||
+      book.author.toLowerCase().includes(query) ||
+      book.category.toLowerCase().includes(query)
+    );
   };
 
   return (
@@ -247,6 +308,55 @@ export default function AdminBooks() {
               </button>
             </form>
           </div>
+        </div>
+
+        {/* Materials List Section */}
+        <div className="mt-12">
+          <h2 className="text-3xl font-bold text-white mb-6">Uploaded Materials</h2>
+
+          {/* Search Section */}
+          <div className="mb-6">
+            <div className="relative w-full">
+              <FontAwesomeIcon 
+                icon={faSearch} 
+                className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 pointer-events-none text-slate-400" 
+              />
+              <input 
+                type="text"
+                placeholder="Search by course code, title, author, or category..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-lg border border-gray-600 bg-chem-dark text-white py-2.5 pl-10 pr-4 text-sm focus:border-chem-cyan focus:outline-none focus:ring-chem-cyan" 
+              />
+            </div>
+          </div>
+          
+          {loadingBooks ? (
+            <p className="text-gray-400">Loading materials...</p>
+          ) : books.length === 0 ? (
+            <p className="text-gray-400">No materials uploaded yet</p>
+          ) : getFilteredBooks().length === 0 ? (
+            <p className="text-gray-400">No materials found matching "{searchQuery}"</p>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-gray-400 text-sm mb-4">Found {getFilteredBooks().length} of {books.length} materials</p>
+              {getFilteredBooks().map((book) => (
+                <div key={book.id} className="bg-chem-dark border border-chem-cyan/20 rounded-lg p-4 flex justify-between items-center">
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold">{book.course_title}</h3>
+                    <p className="text-gray-400 text-sm">{book.course_code} • {book.author} • {book.category}</p>
+                  </div>
+                  <button
+                    onClick={() => handleDelete(book.id, book.course_title)}
+                    className="ml-4 bg-red-500/20 border border-red-500/50 hover:bg-red-500/30 text-red-400 p-2 rounded-lg transition"
+                    title="Delete material"
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
