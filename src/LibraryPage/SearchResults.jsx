@@ -73,7 +73,7 @@ function SearchResult() {
                         <p className="text-gray-400">Searching...</p>
                     </div>
                 ) : results.length > 0 ? (
-                    <div className="space-y-2 lg:grid lg:grid-cols-2 lg:gap-2 lg:space-y-0 p-3">
+                    <div className="books-list grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
                         {results.map((book) => (
                             <BooksCard key={book.id} book={book} />
                         ))}

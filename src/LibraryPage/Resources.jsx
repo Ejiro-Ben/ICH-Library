@@ -25,7 +25,7 @@ function Resources() {
     }, [])
 
     return (
-        <div className="books-list grid grid-cols-1 gap-6">
+        <div className="books-list grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
             {books.map((book) => (
                 <BooksCard 
                     key={book.id}

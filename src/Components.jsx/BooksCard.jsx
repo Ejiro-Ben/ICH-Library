@@ -68,14 +68,14 @@ export const BooksCard = ({ book }) => {
         return fileName?.split('.').pop()?.toUpperCase() || 'FILE';
     };
 
-    return(
+    return(                                             
         <div className="books-card">
-            <div className="bg-chem-cyan/10 border border-chem-cyan/10 p-3 rounded-lg flex w-fit">
+            <div className="bg-chem-cyan/10 border border-chem-cyan/10 p-3 rounded-lg flex w-full">
                 <FontAwesomeIcon icon={faNewspaper} className="text-chem-cyan bg-chem-cyan/10 p-2 rounded-lg mr-2 h-5" />
                 <div>
                     <div className="flex justify-between">
                         <h1 className="text-white font-bold">{book.course_title}</h1>
-                        <p className="text-chem-cyan font-bold border border-chem-cyan rounded-lg px-2">{getFileType(book.file_name)}</p>
+                        <p className="text-chem-cyan font-bold border border-chem-cyan rounded-lg px-2 h-6">{getFileType(book.file_name)}</p>
                     </div>
 
                     <div className="flex space-x-2 mt-2">
