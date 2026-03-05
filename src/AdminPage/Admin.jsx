@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faCheckCircle, faTimesCircle, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../HomePage/NavBar';
 import Footer from '../HomePage/Footer';
+import { apiGet, apiPostFormData, apiDelete } from '../config/apiClient';
 
 export default function AdminBooks() {
   const [formData, setFormData] = useState({
@@ -27,8 +28,7 @@ export default function AdminBooks() {
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/books');
-      const data = await response.json();
+      const data = await apiGet('/api/books');
       setBooks(data || []);
     } catch (error) {
       console.error('Error fetching books:', error);
@@ -76,17 +76,8 @@ export default function AdminBooks() {
       uploadFormData.append('file_type', formData.file_type);
       uploadFormData.append('file', formData.file);
 
-      // Send to backend
-      const response = await fetch('http://localhost:5000/api/books/upload', {
-        method: 'POST',
-        body: uploadFormData
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Upload failed');
-      }
+      // Send to backend using apiClient
+      await apiPostFormData('/api/books/upload', uploadFormData);
 
       // Success
       setMessage({ type: 'success', text: 'Material uploaded successfully!' });
@@ -120,15 +111,7 @@ export default function AdminBooks() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/books/${bookId}`, {
-        method: 'DELETE'
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Delete failed');
-      }
+      await apiDelete(`/api/books/${bookId}`);
 
       setMessage({ type: 'success', text: 'Material deleted successfully!' });
       await fetchBooks();

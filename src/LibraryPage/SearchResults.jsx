@@ -7,6 +7,7 @@ import Footer from "../HomePage/Footer"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { BooksCard } from "../Components.jsx/BooksCard"
+import { apiGet } from "../config/apiClient"
 
 const Suggestion = ({ icon, text }) => (
     <p>
@@ -36,8 +37,7 @@ function SearchResult() {
     const searchBooks = async (searchQuery) => {
         setLoading(true)
         try {
-            const response = await fetch(`http://localhost:5000/api/books/search?q=${encodeURIComponent(searchQuery)}`)
-            const results = await response.json()
+            const results = await apiGet(`/api/books/search?q=${encodeURIComponent(searchQuery)}`)
             setResults(results || [])
         } catch (error) {
             console.error('Search error:', error)
