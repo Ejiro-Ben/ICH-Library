@@ -1,12 +1,5 @@
 {
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "status": 404
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
