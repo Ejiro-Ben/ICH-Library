@@ -28,7 +28,7 @@ export default function AdminBooks() {
 
   const fetchBooks = async () => {
     try {
-      const data = await apiGet('/api/books');
+      const data = await apiGet('/books');
       setBooks(data || []);
     } catch (error) {
       console.error('Error fetching books:', error);
@@ -77,7 +77,7 @@ export default function AdminBooks() {
       uploadFormData.append('file', formData.file);
 
       // Send to backend using apiClient
-      await apiPostFormData('/api/books/upload', uploadFormData);
+      await apiPostFormData('/books/upload', uploadFormData);
 
       // Success
       setMessage({ type: 'success', text: 'Material uploaded successfully!' });

@@ -37,7 +37,7 @@ function SearchResult() {
     const searchBooks = async (searchQuery) => {
         setLoading(true)
         try {
-            const results = await apiGet(`/api/books/search?q=${encodeURIComponent(searchQuery)}`)
+            const results = await apiGet(`/books/search?q=${encodeURIComponent(searchQuery)}`)
             setResults(results || [])
         } catch (error) {
             console.error('Search error:', error)
