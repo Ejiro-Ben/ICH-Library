@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 dotenv.config();
 
 import express from 'express';
@@ -11,11 +12,16 @@ async function start() {
   // Middleware
   app.use(cors());
   app.use(express.json());
+  app.use(cookieParser());
   app.use(express.urlencoded({ extended: true }));
 
   // Import routes after dotenv is configured
   const { default: booksRouter } = await import('../routes/books.js');
+  const authRoutes = (await import('../routes/authRoutes.js')).default;
+  
+  // Register routes
   app.use('/api/books', booksRouter);
+  app.use('/api/auth', authRoutes);
 
   // Error handling
   app.use((err, req, res, next) => {

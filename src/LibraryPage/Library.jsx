@@ -2,7 +2,6 @@ import NavBar from "../HomePage/NavBar"
 import Footer from "../HomePage/Footer"
 import Resources from "./Resources"
 import LibHero from "./LibHero"
-import Filters from "./Filters.jsx"
 import { useState, useEffect } from "react"
 import { supabase } from "../../config/supabaseClient.js"
 
@@ -31,7 +30,6 @@ function Library() {
             <LibHero />
 
             <section className="bg-chem-dark p-3">
-                <Filters />
 
                 <div className="mt-2">
                     <div className="text-gray-400">

@@ -6,7 +6,7 @@
 const getApiBaseUrl = () => {
   // In development: use localhost:5000
   if (import.meta.env.DEV) {
-    return 'http://localhost:5000';
+    return 'http://localhost:5000/api';
   }
 
   // In production (Vercel): use /api (will route to serverless functions)

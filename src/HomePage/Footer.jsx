@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AtomLogo from '../assets/ich-images/AtomLogo.png';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faBarChart, faBookOpen, faEnvelope, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faBookOpen, faEnvelope, faLink } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 const SocialLinks = () => (
@@ -15,22 +15,6 @@ const SocialLinks = () => (
         <a href='https://x.com/Ejiro_Ben5' className='text-white p-1 border border-chem-cyan/10 rounded-lg mr-2 hover:border-chem-cyan'>
             <FontAwesomeIcon icon={faTwitter} />
         </a>
-    </div>
-);
-
-const QuickLink = ({ title, links }) => (
-    <div className='flex flex-col'>
-        <div className='flex mb-1'>
-            <FontAwesomeIcon icon={faLink} className='mt-1 mr-1 text-chem-cyan' />
-            <h1 className='text-white'>{title}</h1>
-        </div>
-        <div className='text-gray-400 flex flex-col text-sm'>
-            {links.map((link, index) => (
-                <a key={index} href={link.href} className='hover:text-chem-cyan'>
-                    {link.label}
-                </a>
-            ))}
-        </div>
     </div>
 );
 
@@ -48,15 +32,9 @@ const ResourcesLink = () => (
 );
 
 function Footer() {
-    const quickLinks = [
-        { label: 'About', href: '#' },
-        { label: 'Research', href: '#' },
-        { label: 'Contact', href: '#' },
-    ];
-
     return (
         <section className='bg-chem-dark pt-20'>
-            <div className='bg-chem-cyan/10 flex flex-col p-6 space-y-8 lg:flex-row lg:justify-around lg:space-y-0 lg:space-x-8'>
+            <div className='bg-chem-cyan/10 flex flex-col p-6 space-y-8 lg:flex-row lg:justify-between lg:space-y-0 lg:space-x-8'>
                 <div>
                     <div className='flex mb-2'>
                         <img src={AtomLogo} alt="ICH Library Logo" className="h-6 w-6 mt-1 mr-1" />
@@ -68,25 +46,7 @@ function Footer() {
                 </div>
 
                 <div className='flex space-x-10'>
-                    <QuickLink title="Quick Links" links={quickLinks} />
                     <ResourcesLink />
-                </div>
-
-                <div>
-                    <div className='flex mb-2'>
-                        <FontAwesomeIcon icon={faBarChart} className='mt-1 mr-1 text-chem-cyan' />
-                        <h1 className='text-white'>Library Stats</h1>
-                    </div>
-                    <div className='text-gray-400'>
-                        <div className='bg-chem-slate border border-chem-cyan/10 p-2 rounded-lg w-64 mb-2'>
-                            <h1 className="font-bold text-chem-cyan">1,240+</h1>
-                            <p className="text-sm">Documents Available</p>
-                        </div>
-                        <div className='bg-chem-slate border border-chem-cyan/10 p-2 rounded-lg w-64'>
-                            <h1 className="font-bold text-chem-green">500+</h1>
-                            <p className="text-sm">Active Users</p>
-                        </div>
-                    </div>
                 </div>
                 <hr />
             </div>

@@ -41,17 +41,6 @@ function Hero() {
                             <FontAwesomeIcon icon={faBook} className="mr-3 mt-1 md:mt-1.5 text-sm" />
                             Explore Library
                         </Link>
-                        <button className="bg-chem-dark text-white border border-chem-cyan/10 hover:border-chem-cyan mx-2 text-sm md:text-base rounded-lg py-2 px-6 md:px-8 mb-4">
-                            <FontAwesomeIcon icon={faSearch} className="mr-3 mt-1 md:mt-1.5 text-sm" />
-                            Search Resources
-                        </button>
-                    </div>
-
-                    <div className="mb-6 text-chem-cyan">
-                        <button className="hover:text-chem-green">
-                            <FontAwesomeIcon icon={faUpload} />
-                            Contribute Materials
-                        </button>
                     </div>
 
                     <Images

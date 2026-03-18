@@ -68,7 +68,7 @@ export const BooksCard = ({ book }) => {
         return fileName?.split('.').pop()?.toUpperCase() || 'FILE';
     };
 
-    return(                                             
+    return(
         <div className="books-card">
             <div className="bg-chem-cyan/10 border border-chem-cyan/10 p-3 rounded-lg flex w-full">
                 <FontAwesomeIcon icon={faNewspaper} className="text-chem-cyan bg-chem-cyan/10 p-2 rounded-lg mr-2 h-5" />
