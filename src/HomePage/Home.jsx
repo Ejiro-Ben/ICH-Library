@@ -29,7 +29,7 @@ function Home() {
         <>
             <Hero />
 
-            <section className="bg-chem-dark px-10 pt-56 md:pt-44">
+            <section className="bg-chem-dark px-10 pt-40 md:pt-44">
                 <div className="text-center">
                     <h1 className="bg-gradient-to-r from-chem-cyan to-chem-green bg-clip-text text-transparent text-2xl font-bold">Why Choose ICH Digital Library</h1>
                     <p className="text-gray-400 text-sm md:text-base">A comprehensive platform designed specifically for Industrial Chemistry students and researchers</p>
