@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import NavBar from "../HomePage/NavBar"
 import SearchBar from "../HomePage/SearchBar"
 import { faArrowLeft, faCheckCircle, faHome, faSearch } from "@fortawesome/free-solid-svg-icons"
-import Filters from "./Filters"
 import Footer from "../HomePage/Footer"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
@@ -65,9 +64,7 @@ function SearchResult() {
                         <p>Back to Library</p>
                     </button>
                 </div>
-
-                <Filters />
-
+                
                 {loading ? (
                     <div className="text-center py-10">
                         <p className="text-gray-400">Searching...</p>

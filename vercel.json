@@ -1,5 +1,13 @@
 {
   "rewrites": [
     { "source": "/(?!api)(.*)", "destination": "/" }
+  ],
+  "headers": [
+    {
+      "source": "/api/auth/login",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, max-age=0" }
+      ]
+    }
   ]
 }
