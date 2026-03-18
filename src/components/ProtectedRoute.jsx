@@ -8,15 +8,22 @@ export default function ProtectedRoute({ element }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // Check if token exists in cookies
         const response = await fetch('/api/auth/verify', {
           method: 'GET',
           credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
         
+        console.log('Auth check response:', response.status);
+        
         if (response.ok) {
+          const data = await response.json();
+          console.log('Authenticated:', data);
           setIsAuthenticated(true);
         } else {
+          console.log('Not authenticated');
           setIsAuthenticated(false);
         }
       } catch (error) {
@@ -33,10 +40,15 @@ export default function ProtectedRoute({ element }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-chem-dark flex items-center justify-center">
-        <div className="text-white">Loading...</div>
+        <div className="text-white text-xl">Verifying access...</div>
       </div>
     );
   }
 
-  return isAuthenticated ? element : <Navigate to="/login" replace />;
+  if (!isAuthenticated) {
+    console.log('Not authenticated, redirecting to login');
+    return <Navigate to="/login" replace />;
+  }
+
+  return element;
 }

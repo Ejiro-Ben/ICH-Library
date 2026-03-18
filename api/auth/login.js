@@ -39,8 +39,9 @@ export default async function handler(req, res) {
 
     const token = generateToken(admin.id);
 
-    // Set cookie
-    res.setHeader('Set-Cookie', `token=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${30 * 24 * 60 * 60}`);
+    // Set cookie (7 days expiry)
+    const maxAge = 7 * 24 * 60 * 60;
+    res.setHeader('Set-Cookie', `token=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`);
 
     return res.status(200).json({ message: 'Login successful' });
   } catch (error) {
