@@ -57,7 +57,7 @@ function Footer() {
                 </div>
                 <div className='text-gray-400 text-sm'>
                     <p>Built by Benodiri Ejiroghene Onovayen,</p>
-                    <p>a Student of the Department of Industrial Chemistry, University of Ilorin.</p>
+                    <p>Student of the Department of Industrial Chemistry, University of Ilorin.</p>
                 </div>
                 <div className='text-gray-400 text-sm font-bold'>
                     <a href='#' className='mr-3'>Privacy Policy</a>
