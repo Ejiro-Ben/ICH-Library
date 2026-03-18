@@ -93,7 +93,7 @@ function Home() {
                             <p className="text-white">Library</p>
                         </Link>
 
-                        <Link to="/past-questions" className="py-1 border border-chem-cyan/10 hover:border-chem-cyan text-center rounded-lg">
+                        <Link to="/pastquestions" className="py-1 border border-chem-cyan/10 hover:border-chem-cyan text-center rounded-lg">
                             <FontAwesomeIcon icon={faFileCircleQuestion} className="text-chem-cyan" />
                             <p className="text-white">Past Questions</p>
                         </Link>
