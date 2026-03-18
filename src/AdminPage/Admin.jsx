@@ -13,25 +13,32 @@ export default function AdminBooks() {
     level: '',
     category: '',
     file_type: '',
-    file: null
+    file: null,
+    material_type: 'book' // 'book' or 'pastquestion'
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [books, setBooks] = useState([]);
   const [loadingBooks, setLoadingBooks] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [viewType, setViewType] = useState('book'); // 'book' or 'pastquestion'
 
-  // Fetch books on component mount
+  // Fetch materials on component mount and when viewType changes
   useEffect(() => {
-    fetchBooks();
-  }, []);
+    fetchMaterials();
+  }, [viewType]);
 
-  const fetchBooks = async () => {
+  const fetchMaterials = async () => {
+    setLoadingBooks(true);
     try {
-      const data = await apiGet('/books');
+      const endpoint = viewType === 'pastquestion' ? '/books/pastquestions' : '/books';
+      console.log('Fetching from endpoint:', endpoint, 'ViewType:', viewType);
+      const data = await apiGet(endpoint);
+      console.log('Fetched data:', data);
       setBooks(data || []);
     } catch (error) {
-      console.error('Error fetching books:', error);
+      console.error('Error fetching materials:', error);
+      setMessage({ type: 'error', text: 'Error fetching materials' });
     } finally {
       setLoadingBooks(false);
     }
@@ -57,9 +64,16 @@ export default function AdminBooks() {
     e.preventDefault();
     
     // Validation
-    if (!formData.course_title || !formData.course_code || !formData.author || !formData.level || !formData.category || !formData.file_type || !formData.file) {
-      setMessage({ type: 'error', text: 'Please fill in all fields' });
-      return;
+    if (formData.material_type === 'pastquestion') {
+      if (!formData.course_title || !formData.course_code || !formData.author || !formData.level || !formData.file_type || !formData.file) {
+        setMessage({ type: 'error', text: 'Please fill in all fields for past questions' });
+        return;
+      }
+    } else {
+      if (!formData.course_title || !formData.course_code || !formData.author || !formData.level || !formData.category || !formData.file_type || !formData.file) {
+        setMessage({ type: 'error', text: 'Please fill in all fields' });
+        return;
+      }
     }
 
     setLoading(true);
@@ -72,15 +86,21 @@ export default function AdminBooks() {
       uploadFormData.append('course_code', formData.course_code);
       uploadFormData.append('author', formData.author);
       uploadFormData.append('level', formData.level);
-      uploadFormData.append('category', formData.category);
       uploadFormData.append('file_type', formData.file_type);
+      uploadFormData.append('material_type', formData.material_type);
       uploadFormData.append('file', formData.file);
+      
+      // Only add category for books
+      if (formData.material_type === 'book') {
+        uploadFormData.append('category', formData.category);
+      }
 
-      // Send to backend using apiClient
-      await apiPostFormData('/books/upload', uploadFormData);
+      // Send to appropriate endpoint
+      const endpoint = formData.material_type === 'pastquestion' ? '/books/upload-pastquestion' : '/books/upload';
+      await apiPostFormData(endpoint, uploadFormData);
 
       // Success
-      setMessage({ type: 'success', text: 'Material uploaded successfully!' });
+      setMessage({ type: 'success', text: `${formData.material_type === 'pastquestion' ? 'Past Question' : 'Material'} uploaded successfully!` });
       setFormData({
         course_title: '',
         course_code: '',
@@ -88,14 +108,15 @@ export default function AdminBooks() {
         level: '',
         category: '',
         file_type: '',
-        file: null
+        file: null,
+        material_type: 'book'
       });
 
       // Reset file input
       document.getElementById('file-input').value = '';
       
-      // Refresh books list
-      await fetchBooks();
+      // Refresh materials list
+      await fetchMaterials();
 
     } catch (error) {
       console.error('Upload error:', error);
@@ -105,34 +126,46 @@ export default function AdminBooks() {
     }
   };
 
-  const handleDelete = async (bookId, courseName) => {
+  const handleDelete = async (materialId, courseName) => {
     if (!window.confirm(`Are you sure you want to delete "${courseName}"?`)) {
       return;
     }
 
     try {
-      await apiDelete(`/api/books/${bookId}`);
+      const endpoint = viewType === 'pastquestion' 
+        ? `/books/pastquestions/${materialId}` 
+        : `/books/${materialId}`;
+      await apiDelete(endpoint);
 
       setMessage({ type: 'success', text: 'Material deleted successfully!' });
-      await fetchBooks();
+      await fetchMaterials();
     } catch (error) {
       console.error('Delete error:', error);
       setMessage({ type: 'error', text: error.message || 'Delete failed. Please try again.' });
     }
   };
 
-  const getFilteredBooks = () => {
+  const getFilteredMaterials = () => {
     if (!searchQuery.trim()) {
       return books;
     }
     
     const query = searchQuery.toLowerCase();
-    return books.filter(book => 
-      book.course_title.toLowerCase().includes(query) ||
-      book.course_code.toLowerCase().includes(query) ||
-      book.author.toLowerCase().includes(query) ||
-      book.category.toLowerCase().includes(query)
-    );
+    if (viewType === 'pastquestion') {
+      return books.filter(item => 
+        item.course_title.toLowerCase().includes(query) ||
+        item.course_code.toLowerCase().includes(query) ||
+        item.author.toLowerCase().includes(query) ||
+        item.level.toLowerCase().includes(query)
+      );
+    } else {
+      return books.filter(item => 
+        item.course_title.toLowerCase().includes(query) ||
+        item.course_code.toLowerCase().includes(query) ||
+        item.author.toLowerCase().includes(query) ||
+        item.category.toLowerCase().includes(query)
+      );
+    }
   };
 
   return (
@@ -146,6 +179,35 @@ export default function AdminBooks() {
 
           <div className="bg-chem-dark border border-chem-cyan/20 rounded-lg p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Material Type Selector */}
+              <div>
+                <label className="block text-white font-semibold mb-2">Material Type</label>
+                <div className="flex gap-4">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="material_type"
+                      value="book"
+                      checked={formData.material_type === 'book'}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 cursor-pointer"
+                    />
+                    <span className="text-white">Book/Notes</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="material_type"
+                      value="pastquestion"
+                      checked={formData.material_type === 'pastquestion'}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 cursor-pointer"
+                    />
+                    <span className="text-white">Past Question</span>
+                  </label>
+                </div>
+              </div>
+
               {/* Course Title Input */}
               <div>
                 <label className="block text-white font-semibold mb-2">Course Title</label>
@@ -205,25 +267,27 @@ export default function AdminBooks() {
                 </select>
               </div>
 
-              {/* Category Input */}
-              <div>
-                <label className="block text-white font-semibold mb-2">Category</label>
-                <select
-                  name="category"
-                  value={formData.category}
-                  onChange={handleInputChange}
-                  className="w-full bg-chem-dark border border-chem-cyan/30 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-chem-cyan"
-                >
-                  <option value="">Select Category</option>
-                  <option value="Lecture Notes">Lecture Notes</option>
-                  <option value="Textbook">Textbook</option>
-                  <option value="Study Guide">Study Guide</option>
-                  <option value="Practice Problems">Practice Problems</option>
-                  <option value="Past Exams">Past Exams</option>
-                  <option value="Video">Video</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
+              {/* Category Input - Only show for Books */}
+              {formData.material_type === 'book' && (
+                <div>
+                  <label className="block text-white font-semibold mb-2">Category</label>
+                  <select
+                    name="category"
+                    value={formData.category}
+                    onChange={handleInputChange}
+                    className="w-full bg-chem-dark border border-chem-cyan/30 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-chem-cyan"
+                  >
+                    <option value="">Select Category</option>
+                    <option value="Lecture Notes">Lecture Notes</option>
+                    <option value="Textbook">Textbook</option>
+                    <option value="Study Guide">Study Guide</option>
+                    <option value="Practice Problems">Practice Problems</option>
+                    <option value="Past Exams">Past Exams</option>
+                    <option value="Video">Video</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              )}
 
               {/* File Type Input */}
               <div>
@@ -297,6 +361,22 @@ export default function AdminBooks() {
         <div className="mt-12">
           <h2 className="text-3xl font-bold text-white mb-6">Uploaded Materials</h2>
 
+          {/* View Type Selector */}
+          <div className="mb-6">
+            <label className="block text-white font-semibold mb-2">View Materials</label>
+            <select
+              value={viewType}
+              onChange={(e) => {
+                setViewType(e.target.value);
+                setSearchQuery('');
+              }}
+              className="w-48 bg-chem-dark border border-chem-cyan/30 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-chem-cyan"
+            >
+              <option value="book">Books & Notes</option>
+              <option value="pastquestion">Past Questions</option>
+            </select>
+          </div>
+
           {/* Search Section */}
           <div className="mb-6">
             <div className="relative w-full">
@@ -306,7 +386,7 @@ export default function AdminBooks() {
               />
               <input 
                 type="text"
-                placeholder="Search by course code, title, author, or category..." 
+                placeholder={viewType === 'pastquestion' ? "Search by course code, title, author, or level..." : "Search by course code, title, author, or category..."} 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full rounded-lg border border-gray-600 bg-chem-dark text-white py-2.5 pl-10 pr-4 text-sm focus:border-chem-cyan focus:outline-none focus:ring-chem-cyan" 
@@ -317,20 +397,22 @@ export default function AdminBooks() {
           {loadingBooks ? (
             <p className="text-gray-400">Loading materials...</p>
           ) : books.length === 0 ? (
-            <p className="text-gray-400">No materials uploaded yet</p>
-          ) : getFilteredBooks().length === 0 ? (
+            <p className="text-gray-400">No {viewType === 'pastquestion' ? 'past questions' : 'books and notes'} uploaded yet</p>
+          ) : getFilteredMaterials().length === 0 ? (
             <p className="text-gray-400">No materials found matching "{searchQuery}"</p>
           ) : (
             <div className="space-y-3">
-              <p className="text-gray-400 text-sm mb-4">Found {getFilteredBooks().length} of {books.length} materials</p>
-              {getFilteredBooks().map((book) => (
-                <div key={book.id} className="bg-chem-dark border border-chem-cyan/20 rounded-lg p-4 flex justify-between items-center">
+              <p className="text-gray-400 text-sm mb-4">Found {getFilteredMaterials().length} of {books.length} materials</p>
+              {getFilteredMaterials().map((item) => (
+                <div key={item.id} className="bg-chem-dark border border-chem-cyan/20 rounded-lg p-4 flex justify-between items-center">
                   <div className="flex-1">
-                    <h3 className="text-white font-semibold">{book.course_title}</h3>
-                    <p className="text-gray-400 text-sm">{book.course_code} • {book.author} • {book.category}</p>
+                    <h3 className="text-white font-semibold">{item.course_title}</h3>
+                    <p className="text-gray-400 text-sm">
+                      {item.course_code} • {item.author} • {viewType === 'pastquestion' ? item.level : item.category}
+                    </p>
                   </div>
                   <button
-                    onClick={() => handleDelete(book.id, book.course_title)}
+                    onClick={() => handleDelete(item.id, item.course_title)}
                     className="ml-4 bg-red-500/20 border border-red-500/50 hover:bg-red-500/30 text-red-400 p-2 rounded-lg transition"
                     title="Delete material"
                   >

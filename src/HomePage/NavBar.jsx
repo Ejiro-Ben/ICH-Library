@@ -30,9 +30,8 @@ const MobileNavItem = ({ icon, label, to, href }) => (
 const navItems = [
     { icon: faHome, label: "Home", to: "/" },
     { icon: faBook, label: "Library", to: "/library" },
-    { icon: faFileCircleQuestion, label: "Past Questions", href: "#pastquestions" },
-    { icon: faExclamationCircle, label: "About", href: "#about" },
-    { icon: faCog, label: "Admin", to: "/Login" }
+    { icon: faFileCircleQuestion, label: "Past Questions", to: "/pastquestions" },
+    { icon: faCog, label: "Admin", to: "/login" }
 ];
 
 function NavBar() {

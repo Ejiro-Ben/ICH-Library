@@ -48,6 +48,22 @@ export default {
     res.json({ message: 'Login successful' });
   },
 
+  verify_get: (req, res) => {
+    try {
+      const token = req.cookies.token;
+      
+      if (!token) {
+        return res.status(401).json({ authenticated: false, error: 'No token' });
+      }
+
+      jwt.verify(token, process.env.JWT_SECRET);
+      res.status(200).json({ authenticated: true });
+    } catch (error) {
+      console.error('Token verification error:', error);
+      res.status(401).json({ authenticated: false, error: 'Invalid token' });
+    }
+  },
+
   admin_uploads_get: (req, res) => {
     res.json({ message: 'Admin uploads GET endpoint', user: req.user });
   }
