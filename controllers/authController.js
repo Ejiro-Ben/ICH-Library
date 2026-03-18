@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { supabase } from '../config/supabaseServerClient.js';
 
@@ -37,7 +37,7 @@ export default {
     }
 
     const adminData = admin.data;
-    const passwordMatch = await bcrypt.compare(password, adminData.password);
+    const passwordMatch = await bcryptjs.compare(password, adminData.password);
 
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Incorrect password' });

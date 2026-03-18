@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { supabase } from '../../config/supabaseServerClient.js';
 
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid username or password' });
     }
 
-    const passwordMatch = await bcrypt.compare(password, admin.password);
+    const passwordMatch = await bcryptjs.compare(password, admin.password);
 
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Incorrect password' });
