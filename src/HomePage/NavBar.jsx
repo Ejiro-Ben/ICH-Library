@@ -3,26 +3,45 @@ import { useState, useRef, useEffect } from 'react';
 import AtomLogo from '../assets/ich-images/AtomLogo.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faBook, faCog, faFileCircleQuestion, faExclamationCircle, faBars, faScroll, faX } from "@fortawesome/free-solid-svg-icons";
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const NavItem = ({ icon, label, to, href }) => (
-    <li className="text-chem-text hover:text-chem-cyan transition duration-300">
-        <FontAwesomeIcon icon={icon} />
-        {to ? <Link to={to}>{label}</Link> : <a href={href}>{label}</a>}
+    <li className="transition duration-300">
+        {to ? (
+            <NavLink
+                to={to}
+                className={({ isActive }) =>
+                    `flex items-center gap-2 ${isActive ? 'text-chem-cyan' : 'text-chem-text hover:text-chem-cyan'}`
+                }
+            >
+                <FontAwesomeIcon icon={icon} />
+                {label}
+            </NavLink>
+        ) : (
+            <a className="flex items-center gap-2 text-chem-text hover:text-chem-cyan" href={href}>
+                <FontAwesomeIcon icon={icon} />
+                {label}
+            </a>
+        )}
     </li>
 );
 
 const MobileNavItem = ({ icon, label, to, href }) => (
-    <li className="text-chem-text hover:text-chem-cyan transition duration-300 rounded-full bg-chem-cyan/10 p-2">
+    <li className="transition duration-300 rounded-full bg-chem-cyan/10 p-2">
         {to ? (
-            <Link to={to}>
+            <NavLink
+                to={to}
+                className={({ isActive }) =>
+                    `flex items-center gap-2 ${isActive ? 'text-chem-cyan' : 'text-chem-text hover:text-chem-cyan'}`
+                }
+            >
                 <FontAwesomeIcon icon={icon} /> {label}
-            </Link>
+            </NavLink>
         ) : (
-            <>
+            <a className="flex items-center gap-2 text-chem-text hover:text-chem-cyan" href={href}>
                 <FontAwesomeIcon icon={icon} />
-                <a href={href}>{label}</a>
-            </>
+                {label}
+            </a>
         )}
     </li>
 );

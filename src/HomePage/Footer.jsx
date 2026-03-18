@@ -26,7 +26,7 @@ const ResourcesLink = () => (
         </div>
         <div className='text-gray-400 flex flex-col text-sm'>
             <Link to="/library" className='hover:text-chem-cyan'> Library </Link>
-            <a href='#' className='hover:text-chem-cyan'> Past Questions </a>
+            <Link to="/pastquestions" className='hover:text-chem-cyan'> Past Questions </Link>
         </div>
     </div>
 );
