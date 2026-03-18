@@ -22,16 +22,18 @@ export default function ProtectedRoute({ element }) {
         const data = await response.json();
         console.log('📋 Verify endpoint response:', data);
 
-        // Only accept 200 status with authenticated: true
+        // Strictly check: ONLY 200 status AND authenticated: true allows access
         if (response.status === 200 && data.authenticated === true) {
-          console.log('✅ User is authenticated');
+          console.log('✅ User is authenticated - allowing access');
           setAuthState('authenticated');
         } else {
-          console.log('❌ Authentication failed - user not authorized');
+          console.log('❌ Authentication failed - denying access');
+          console.log('Status:', response.status, 'Authenticated:', data.authenticated);
           setAuthState('unauthenticated');
         }
       } catch (error) {
         console.error('⚠️ Error during authentication check:', error);
+        console.error('Defaulting to unauthenticated due to error');
         setAuthState('unauthenticated');
       }
     };
@@ -39,8 +41,11 @@ export default function ProtectedRoute({ element }) {
     verifyAuthentication();
   }, []);
 
-  // Still checking authentication
+  console.log('ProtectedRoute current state:', authState);
+
+  // While checking - show loading
   if (authState === 'checking') {
+    console.log('🔄 Still checking authentication, showing loading screen');
     return (
       <div className="min-h-screen bg-chem-dark flex items-center justify-center">
         <div className="text-center">
@@ -53,11 +58,17 @@ export default function ProtectedRoute({ element }) {
 
   // Not authenticated - redirect to login
   if (authState === 'unauthenticated') {
-    console.log('🚫 Redirecting unauthenticated user to login');
+    console.log('🚫 User not authenticated - redirecting to /login');
     return <Navigate to="/login" replace />;
   }
 
   // Authenticated - show the protected component
-  console.log('🔓 Rendering protected component');
-  return element;
+  if (authState === 'authenticated') {
+    console.log('🔓 User authenticated - rendering protected component');
+    return element;
+  }
+
+  // Fallback - should never reach here
+  console.log('⚠️ Unexpected state, defaulting to login redirect');
+  return <Navigate to="/login" replace />;
 }
