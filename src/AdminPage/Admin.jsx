@@ -281,8 +281,6 @@ export default function AdminBooks() {
                     <option value="Lecture Notes">Lecture Notes</option>
                     <option value="Textbook">Textbook</option>
                     <option value="Study Guide">Study Guide</option>
-                    <option value="Practice Problems">Practice Problems</option>
-                    <option value="Past Exams">Past Exams</option>
                     <option value="Video">Video</option>
                     <option value="Other">Other</option>
                   </select>
