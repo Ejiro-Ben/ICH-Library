@@ -1,4 +1,5 @@
 import { supabase } from '../../../config/supabaseServerClient.js';
+import jwt from 'jsonwebtoken';
 
 /**
  * DELETE /api/books/pastquestions/[id]
@@ -7,7 +8,7 @@ import { supabase } from '../../../config/supabaseServerClient.js';
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
     'Access-Control-Allow-Headers',
@@ -21,6 +22,40 @@ export default async function handler(req, res) {
 
   if (req.method !== 'DELETE') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Authenticate user
+  try {
+    const cookieHeader = req.headers.cookie;
+    
+    if (!cookieHeader) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
+      const [key, value] = cookie.trim().split('=');
+      acc[key] = value;
+      return acc;
+    }, {});
+
+    const token = cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const { data: admin, error } = await supabase
+      .from('admin')
+      .select('*')
+      .eq('id', decoded.id)
+      .single();
+    
+    if (error || !admin) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  } catch (err) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 
   try {

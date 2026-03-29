@@ -63,6 +63,7 @@ export const apiDelete = async (endpoint) => {
 
   const response = await fetch(url, {
     method: 'DELETE',
+    credentials: 'include', // Include cookies for authentication
   });
 
   if (!response.ok) {
