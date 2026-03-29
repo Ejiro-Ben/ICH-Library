@@ -11,9 +11,10 @@ async function start() {
 
   // Middleware
   app.use(cors({
-    origin: '*', // Allow all origins (be more restrictive in production)
+    origin: process.env.NODE_ENV === 'production' ? false : 'http://localhost:5173', // Allow specific origin in dev, auto-detect in prod
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true // Allow credentials
   }));
   app.use(express.json());
   app.use(cookieParser());
