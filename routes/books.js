@@ -4,6 +4,13 @@ import { supabase } from '../config/supabaseServerClient.js';
 
 const router = express.Router();
 
+// Handle preflight requests for all routes
+router.options('*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.status(200).end();
+});
+
 //File restrictions + size limit (20mb)
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -279,7 +286,7 @@ router.delete('/:id', async (req, res) => {
     .delete()
     .eq('id', id)
 
-    res.json({message: 'Deleta successfully'})
+    res.json({message: 'Deleted successfully'})
 
   } catch (err) {
     res.status(500).json({ error: err.message})
