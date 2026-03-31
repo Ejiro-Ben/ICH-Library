@@ -242,7 +242,7 @@ export default function AdminBooks() {
                   type="text"
                   name="author"
                   value={formData.author}
-                  maxLength={15}
+                  maxLength={19}
                   onChange={handleInputChange}
                   placeholder="e.g., Dr. John Smith"
                   className="w-full bg-chem-dark border border-chem-cyan/30 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-chem-cyan"
