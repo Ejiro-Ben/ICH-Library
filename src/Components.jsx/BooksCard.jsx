@@ -80,7 +80,7 @@ export const BooksCard = ({ book }) => {
 
                     <div className="flex space-x-2 mt-2">
                         <p className="bg-chem-green px-2 rounded-lg">{book.author}</p>
-                        <p className="bg-chem-green px-2 rounded-lg">{book.course_code}</p>
+                        <p className="bg-chem-green px-2 rounded-lg text-center">{book.course_code}</p>
                     </div>
 
                     <div className="flex space-x-2 mt-2 text-gray-400">
