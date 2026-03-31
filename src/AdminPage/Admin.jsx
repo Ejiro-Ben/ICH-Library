@@ -215,7 +215,7 @@ export default function AdminBooks() {
                   type="text"
                   name="course_title"
                   value={formData.course_title}
-                  maxLength={30}
+                  maxLength={45}
                   onChange={handleInputChange}
                   placeholder="e.g., Chemistry 101"
                   className="w-full bg-chem-dark border border-chem-cyan/30 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-chem-cyan"
@@ -242,7 +242,7 @@ export default function AdminBooks() {
                   type="text"
                   name="author"
                   value={formData.author}
-                  maxLength={10}
+                  maxLength={15}
                   onChange={handleInputChange}
                   placeholder="e.g., Dr. John Smith"
                   className="w-full bg-chem-dark border border-chem-cyan/30 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-chem-cyan"
@@ -263,9 +263,6 @@ export default function AdminBooks() {
                   <option value="200">200 Level</option>
                   <option value="300">300 Level</option>
                   <option value="400">400 Level</option>
-                  <option value="Beginner">Beginner</option>
-                  <option value="Intermediate">Intermediate</option>
-                  <option value="Advanced">Advanced</option>
                 </select>
               </div>
 
