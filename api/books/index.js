@@ -59,7 +59,7 @@ export default async function handler(req, res) {
   try {
     // GET: Fetch all books
     if (req.method === 'GET') {
-      console.log('Fetching all books from Supabase...');
+//  console.log('Fetching all books from Supabase...');
       
       const { data, error } = await supabase
         .from('books')
@@ -68,13 +68,13 @@ export default async function handler(req, res) {
 
       if (error) throw error;
 
-      console.log(`Found ${data.length} books`);
+//      console.log(`Found ${data.length} books`);
       return res.status(200).json(data);
     }
 
     // POST: Upload a new book
     if (req.method === 'POST') {
-      console.log('Processing file upload...');
+//      console.log('Processing file upload...');
       
       // Parse multipart form data
       await runMiddleware(req, res, upload.single('file'));
@@ -86,7 +86,7 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'No file uploaded' });
       }
 
-      console.log(`Uploading file: ${file.originalname}`);
+//      console.log(`Uploading file: ${file.originalname}`);
 
       // Create unique filename
       const fileName = `${Date.now()}-${file.originalname}`;

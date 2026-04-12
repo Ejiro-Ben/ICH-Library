@@ -15,14 +15,14 @@ const getApiBaseUrl = () => {
 
 const API_BASE_URL = getApiBaseUrl();
 
-console.log('API Base URL:', API_BASE_URL); // For debugging
+// console.log('API Base URL:', API_BASE_URL); // For debugging
 
 /**
  * GET request helper
  */
 export const apiGet = async (endpoint) => {
   const url = `${API_BASE_URL}${endpoint}`;
-  console.log('GET request to:', url);
+// console.log('GET request to:', url);
   
   const response = await fetch(url);
 
@@ -39,7 +39,7 @@ export const apiGet = async (endpoint) => {
  */
 export const apiPostFormData = async (endpoint, formData) => {
   const url = `${API_BASE_URL}${endpoint}`;
-  console.log('POST FormData to:', url);
+// console.log('POST FormData to:', url);
 
   const response = await fetch(url, {
     method: 'POST',
@@ -59,7 +59,7 @@ export const apiPostFormData = async (endpoint, formData) => {
  */
 export const apiDelete = async (endpoint) => {
   const url = `${API_BASE_URL}${endpoint}`;
-  console.log('DELETE request to:', url);
+// console.log('DELETE request to:', url);
 
   const response = await fetch(url, {
     method: 'DELETE',

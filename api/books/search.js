@@ -26,10 +26,10 @@ export default async function handler(req, res) {
   try {
     const searchQuery = req.query.q || '';
 
-    console.log(`Searching for: "${searchQuery}"`);
+// console.log(`Searching for: "${searchQuery}"`);
 
     if (!searchQuery.trim()) {
-      console.log('Empty search query, returning empty array');
+// console.log('Empty search query, returning empty array');
       return res.json([]);
     }
 
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
 
     if (error) throw error;
 
-    console.log(`Found ${data.length} results`);
+// console.log(`Found ${data.length} results`);
     return res.status(200).json(data);
   } catch (error) {
     console.error('Search Error:', error);

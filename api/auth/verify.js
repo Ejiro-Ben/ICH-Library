@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     const cookieHeader = req.headers.cookie;
     
     if (!cookieHeader) {
-      console.log('No cookie header found');
+// console.log('No cookie header found');
       return res.status(401).json({ authenticated: false, error: 'No authentication token' });
     }
 
@@ -25,18 +25,18 @@ export default async function handler(req, res) {
     const token = cookies.token;
 
     if (!token || token === '' || token === 'undefined') {
-      console.log('Token missing or invalid:', token);
+// console.log('Token missing or invalid:', token);
       return res.status(401).json({ authenticated: false, error: 'No valid token' });
     }
 
     try {
       // Verify the token - this will throw if invalid
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log('Token verified successfully for admin ID:', decoded.id);
+// console.log('Token verified successfully for admin ID:', decoded.id);
       
       return res.status(200).json({ authenticated: true, userId: decoded.id });
     } catch (jwtError) {
-      console.log('JWT verification failed:', jwtError.message);
+// console.log('JWT verification failed:', jwtError.message);
       return res.status(401).json({ authenticated: false, error: 'Invalid token' });
     }
   } catch (error) {

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faBook, faCog, faFileCircleQuestion, faExclamationCircle, faBars, faScroll, faX } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from 'react-router-dom';
 
+
 const NavItem = ({ icon, label, to, href }) => (
     <li className="transition duration-300">
         {to ? (
@@ -46,16 +47,19 @@ const MobileNavItem = ({ icon, label, to, href }) => (
     </li>
 );
 
-const navItems = [
-    { icon: faHome, label: "Home", to: "/" },
-    { icon: faBook, label: "Library", to: "/library" },
-    { icon: faFileCircleQuestion, label: "Past Questions", to: "/pastquestions" },
-    { icon: faCog, label: "Admin", to: "/login" }
-];
+
 
 function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
+    const [token, setToken] = useState(localStorage.getItem("token"));
     const ref = useRef(null);
+
+    const navItems = [
+        { icon: faHome, label: "Home", to: "/" },
+        { icon: faBook, label: "Library", to: "/library" },
+        { icon: faFileCircleQuestion, label: "Past Questions", to: "/pastquestions" },
+        { icon: faCog, label: "Admin", to: token ? "/admin" : "/login"}
+    ];
 
     useEffect(() => {
         const handler = (e) => {

@@ -60,7 +60,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('Processing past question upload...');
+// console.log('Processing past question upload...');
     
     // Parse multipart form data
     await runMiddleware(req, res, upload.single('file'));
@@ -79,7 +79,7 @@ export default async function handler(req, res) {
     // Generate unique filename
     const fileName = `${Date.now()}-${file.originalname}`;
 
-    console.log(`Uploading file: ${fileName} to pastquestions bucket`);
+// console.log(`Uploading file: ${fileName} to pastquestions bucket`);
 
     // Upload to pastquestions storage bucket
     const { error: uploadError } = await supabase.storage
@@ -97,7 +97,7 @@ export default async function handler(req, res) {
 
     const fileUrl = publicUrlData?.publicUrl;
 
-    console.log(`File uploaded, saving to pastquestions table`);
+// console.log(`File uploaded, saving to pastquestions table`);
 
     // Insert into pastquestions table
     const { data, error } = await supabase
@@ -117,7 +117,7 @@ export default async function handler(req, res) {
 
     if (error) throw error;
 
-    console.log('Past question uploaded successfully');
+// console.log('Past question uploaded successfully');
     return res.status(200).json({
       message: 'Past question uploaded successfully',
       question: data[0],

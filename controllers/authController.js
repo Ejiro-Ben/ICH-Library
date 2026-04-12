@@ -7,12 +7,12 @@ const cookiesOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'strict',
-  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
 };
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30d',
+    expiresIn: '1d',
   });
 }
 
@@ -45,7 +45,7 @@ export default {
 
     const token = generateToken(adminData.id);
     res.cookie('token', token, cookiesOptions);
-    res.json({ message: 'Login successful' });
+    res.json({ message: 'Login successful', token });
   },
 
   verify_get: (req, res) => {

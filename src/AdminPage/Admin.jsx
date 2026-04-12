@@ -32,9 +32,9 @@ export default function AdminBooks() {
     setLoadingBooks(true);
     try {
       const endpoint = viewType === 'pastquestion' ? '/books/pastquestions' : '/books';
-      console.log('Fetching from endpoint:', endpoint, 'ViewType:', viewType);
+// console.log('Fetching from endpoint:', endpoint, 'ViewType:', viewType);
       const data = await apiGet(endpoint);
-      console.log('Fetched data:', data);
+// console.log('Fetched data:', data);
       setBooks(data || []);
     } catch (error) {
       console.error('Error fetching materials:', error);
