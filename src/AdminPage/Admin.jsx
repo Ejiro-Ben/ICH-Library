@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faCheckCircle, faTimesCircle, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../HomePage/NavBar';
@@ -6,6 +7,7 @@ import Footer from '../HomePage/Footer';
 import { apiGet, apiPostFormData, apiDelete } from '../config/apiClient';
 
 export default function AdminBooks() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     course_title: '',
     course_code: '',
@@ -145,6 +147,20 @@ export default function AdminBooks() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (error) {
+      console.error('Logout failed:', error);
+    } finally {
+      localStorage.removeItem('token');
+      navigate('/login', { replace: true });
+    }
+  };
+
   const getFilteredMaterials = () => {
     if (!searchQuery.trim()) {
       return books;
@@ -173,10 +189,21 @@ export default function AdminBooks() {
       <NavBar />
       
       <div className="bg-chem-dark min-h-screen p-8">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-4xl font-bold text-white mb-2">Upload Learning Material</h1>
-          <p className="text-gray-400 mb-8">Add new course materials to the library</p>
+        <div className="flex items-center justify-between gap-4 max-w-5xl mx-auto mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-white mb-2">Upload Learning Material</h1>
+            <p className="text-gray-400">Add new course materials to the library</p>
+          </div>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="rounded-lg bg-red-500/90 px-4 py-2 text-white font-semibold hover:bg-red-500 transition"
+          >
+            Logout
+          </button>
+        </div>
 
+        <div className="max-w-2xl mx-auto">
           <div className="bg-chem-dark border border-chem-cyan/20 rounded-lg p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Material Type Selector */}

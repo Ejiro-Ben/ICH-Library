@@ -7,12 +7,12 @@ const cookiesOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'strict',
-  maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+  maxAge: 30 * 1000, // 30 minutes
 };
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '1d',
+    expiresIn: '30s',
   });
 }
 
@@ -62,6 +62,17 @@ export default {
       console.error('Token verification error:', error);
       res.status(401).json({ authenticated: false, error: 'Invalid token' });
     }
+  },
+
+  logout_post: (req, res) => {
+    res.clearCookie('token', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+      expires: new Date(0), // Set the cookie to expire in the past
+    });
+    res.json({ message: 'Logout successful' });
   },
 
   admin_uploads_get: (req, res) => {

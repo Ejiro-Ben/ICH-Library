@@ -4,7 +4,7 @@ import { supabase } from '../../config/supabaseServerClient.js';
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30d',
+    expiresIn: '30s',
   });
 };
 
@@ -39,8 +39,8 @@ export default async function handler(req, res) {
 
     const token = generateToken(admin.id);
 
-    // Set cookie (7 days expiry)
-    const maxAge = 7 * 24 * 60 * 60;
+    // Set cookie (30 seconds expiry)
+    const maxAge = 30;
     res.setHeader('Set-Cookie', `token=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`);
 
     return res.status(200).json({ message: 'Login successful' });

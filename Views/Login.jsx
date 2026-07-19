@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faLock, faUser, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavBar from '../src/HomePage/NavBar';
+import Footer from '../src/HomePage/Footer';
 
 export default function Login() {
 
@@ -43,6 +45,9 @@ export default function Login() {
     };
 
     return (
+        <>
+        <NavBar />
+
         <div className="min-h-screen bg-chem-dark flex items-center justify-center px-4 py-8">
             {/* Decorative background elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -139,5 +144,7 @@ export default function Login() {
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-chem-cyan to-chem-green opacity-0 group-hover:opacity-10 blur-xl -z-10 transition duration-500"></div>
             </div>
         </div>
+        <Footer />
+        </>
     )
 }
